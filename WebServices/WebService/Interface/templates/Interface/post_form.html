@@ -1,0 +1,17 @@
+{% extends "Interface/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h2>Upload a file!</h2>
+    <div class="content-section">
+    	<form method="POST" enctype="multipart/form-data">
+    		{% csrf_token %}
+    		<fieldset class="form-group">
+    			<legend class="border-bottom mb-4">Upload your file</legend>
+    			{{ form|crispy }}
+    		</fieldset>
+    		<div class="form-group">
+    			<button class="btn btn-outline-info" type="submit">Send</button>
+    		</div>
+    	</form>
+    </div>
+{% endblock content %}

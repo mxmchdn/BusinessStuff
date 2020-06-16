@@ -1,0 +1,34 @@
+{% extends "Interface/base.html" %}
+{% block content %}
+    <article class="media content-section">
+    	<div class="media-body">
+    		<div class="article-metadata">
+    			<a class="mr-2" href="{% url 'Profile' %}">{{ object.author }}</a>
+    			<small class="text-muted">Date: {{ object.date_posted|date:"F d, Y" }}</small>
+                <small class="text-muted">| Service: {{ object.service }}</small>
+                {% if object.author == user %}
+                <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'file-update' object.id %}" title="Update your file">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'file-delete' object.id %}" title="Delete your file">Delete</a>
+                </div>
+                {% endif %}
+    		</div>
+    		<h2 class="article-title">{{ object.name }}</h2>
+    		<p class="article-content">{{ object.description }}</p>
+            <h5>This is the input file:</h5>
+    		<p class="article-content">{{ object.file.name }} <a href="{{ object.file.url }}" class="btn btn-outline-info btn-sm" download title="Dowload your uploaded file">Dowload Input</a></p>
+            {% if object.output_file != 'default.csv' %}
+                <h5>This is the output after execution:</h5>
+                <p class="article-content">{{ object.output_file.name }} <a href="{{ object.output_file.url }}" class="btn btn-outline-info btn-sm" download title="Dowload your output file (after execution)">Dowload Output</a></p>
+                <button class="btn btn-outline-secondary btn-sm mt-1 mb-1" onclick="location.href='{% url 'file-execute' %}'" title="New execution">Execute again?</button>
+                <button class="btn btn-outline-secondary btn-sm mt-1 mb-1" onclick="location.href='{% url 'file-visualization' %}'" title="Visualize your file">Visualization</button>
+            {% else %}
+                <h5>Test your TVA's clients number:</h5>
+                <button class="btn btn-outline-secondary btn-sm mt-1 mb-1" onclick="location.href='{% url 'file-execute' %}'" title="execute your file">Execute</button>
+                <small class="text-muted"><a href="{{ object.output_file.url }}" download title="Download the preview" target="_blank">See the default output?</a></small>
+            {% endif %}
+            <br><br>
+            <a class="btn btn-outline-primary btn-sm mt-1 mb-1" href="{% url 'TVA' %}" title="Go back on the list of inputs files">List of inputs files</a>
+    	</div>
+    </article>
+{% endblock %}

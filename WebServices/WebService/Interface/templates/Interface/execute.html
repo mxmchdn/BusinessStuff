@@ -1,0 +1,49 @@
+{% extends "Interface/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<h2>Exeution of the file:</h2>
+    <div class="content-section">
+    	<form method="POST" enctype="multipart/form-data">
+    		{% csrf_token %}
+	    	{% if output == 'You are not authorize to execute this file!'%}
+	    		{{ output }}<br><br>
+	    		<small class="text-muted"><a href="{% url 'Login' %}">Re-Login you!</a></small>
+	    	{% elif output == 'You have no more execution left!' %}
+	    		{{ output }}<br><br>
+	    		<p>Please Contact Us!</p>
+	    	{% elif output == 'Not Executed' or output == 'Only input file are executable!' or  output == 'The file does not exist!' %}
+	    		{{ output }}<br><br>
+	    		Choose your table:
+            	<input type="text" name="path" required><br><br>
+            	<input type="submit" value="Execute checking VAT number" class="btn btn-outline-info btn-sm mt-1 mb-1">
+            	<a> | </a>
+            	<a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'TVA' %}">List of inputs files</a>
+            {% else %}
+        		<table class="table">
+        			<thead>
+	        			<tr>
+	        				<th>Name</th>
+	        				<th>TVA_Number</th>
+	        				<th>TVA_Name</th>
+	        				<th>TVA_Address</th>
+	        				<th>TVA_CP_Country</th>
+	        				<th>Exist</th>
+	        			</tr>
+        			</thead>
+        			<tbody>
+	        			{% for line in content %}
+		        			<tr>
+		        				<td>{{ line.Name }}</td>
+		        				<td>{{ line.TVA_Number }}</td>
+		        				<td>{{ line.TVA_Name }}</td>
+		        				<td>{{ line.TVA_Address }}</td>
+		        				<td>{{ line.TVA_CP_Country }}</td>
+		        				<td>{{ line.Exist }}</td>
+		        			</tr>
+	        			{% endfor %}
+        			</tbody>
+        		</table>
+            {% endif %}
+    	</form>
+    </div>
+{% endblock content %}

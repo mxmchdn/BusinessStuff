@@ -1,0 +1,7 @@
+{% extends "Interface/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <h1>We have some services</h1>
+    <br>
+    <p><a href="{% url 'TVA' %}"><img style="width: 250px; height: 175px;" alt="TVA" src="{% static 'images/tva.png' %}"></a> With this service, you can check your TVA number if you are authorize to. Please check our <a href="{% url 'UI-about' %}">about</a> page.</p>
+{% endblock content %}
